@@ -1,0 +1,4 @@
+# 明文永远不许进这个公开仓库
+src/
+*.plain.html
+plain_*.html

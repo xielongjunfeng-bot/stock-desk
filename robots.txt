@@ -1,0 +1,9 @@
+# 本站不希望被搜索引擎收录。
+# 注意：真正生效的是每个页面 <head> 里的 <meta name="robots" content="noindex">。
+# 这里刻意「允许抓取」，因为爬虫必须能读到页面才能看见 noindex 指令；
+# 若在此写 Disallow，反而会挡住爬虫读取 noindex，导致 URL 仍可能出现在搜索结果中。
+User-agent: *
+Allow: /
+
+# 说明：GitHub Pages 项目页的 robots.txt 位于 /stock-desk/robots.txt，
+# 而爬虫只读取域名根目录的 /robots.txt，因此本文件实际不被读取，仅作留档。
