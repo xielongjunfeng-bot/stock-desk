@@ -116,10 +116,10 @@ footer b{color:var(--ink2)}
 <body>
 
 <header><div class="wrap">
-  <h1>个股深挖 · {{代码}} {{公司中文名}}<span class="probadge">PRO 数据</span></h1>
+  <h1>{{页面标题}}<span class="probadge">{{徽章}}</span></h1>
   <div class="sub">
     <b>第 {{N}} 期 · 轮换序列 {{N}}/23 · 数据截至 {{YYYY-MM-DD}} 美东收盘</b><br>
-    估值与评级来自 Investing.com Pro（已登录账户）· 生成于 {{MM-DD}} 东京 {{HH:MM}}
+    {{数据源署名——见任务指令}} · 生成于 {{MM-DD}} 东京 {{HH:MM}}
   </div>
 </div></header>
 
@@ -138,7 +138,7 @@ footer b{color:var(--ink2)}
 <nav><div class="wrap">
   <a href="./" style="background:#12141a;color:#fff;border-color:#12141a">← 首页</a>
   <a href="#conflict">信号打架</a><a href="#pro">Pro 数据</a><a href="#kline">那根K线</a>
-  <a href="#position">你的持仓</a><a href="#fund">基本面</a><a href="#strat">策略</a><a href="#miss">未取到</a>
+  <a href="#position">{{节4}}</a><a href="#fund">基本面</a><a href="#strat">策略</a><a href="#miss">未取到</a>
 </div></nav>
 
 <div class="wrap">
@@ -170,7 +170,7 @@ footer b{color:var(--ink2)}
 
 <!-- 02 ───────────────────────────────────────────── -->
 <h2 id="pro"><span class="n">02</span>Pro 数据全表</h2>
-<p class="lead">以下均来自 Investing.com Pro 已登录账户，{{M/D}} 收盘口径。</p>
+<p class="lead">{{数据来源与口径说明——见任务指令}}</p>
 <div class="card">
   <table class="tbl">
     <tr><td>收盘价</td><td class="down">{{价}}　{{−X.XX%}}</td></tr>
@@ -201,12 +201,12 @@ footer b{color:var(--ink2)}
 </div></div>
 
 <!-- 04 ───────────────────────────────────────────── -->
-<h2 id="position"><span class="n">04</span>你的持仓{{：本期发现}}</h2>
-<p class="lead">{{持仓描述——从任务指令里取，不要写进本模板}}</p>
+<h2 id="position"><span class="n">04</span>{{第04节标题——见任务指令}}</h2>
+<p class="lead">{{本节导语——从任务指令里取，不要写进本模板}}</p>
 <div class="warn">
   <div class="warn-h">⚠ {{一句话说清错配或叠加}}</div>
   <div class="warn-b">
-    {{财报日 / 宏观事件日 / 持仓到期日 三者的时间关系，以及这意味着实际在赌什么}}
+    {{三个关键日期之间的时间关系，以及这意味着实际在赌什么}}
     <div class="tl">
       <div class="tl-i"><div class="tl-d">{{M/D}}</div><div class="tl-t">{{事件}}</div></div>
       <div class="tl-i hot"><div class="tl-d">{{M/D}}</div><div class="tl-t">{{关键事件用 hot 标红}}</div></div>
@@ -229,9 +229,9 @@ footer b{color:var(--ink2)}
 <!-- 06 ───────────────────────────────────────────── -->
 <h2 id="strat"><span class="n">06</span>交易策略</h2>
 <div class="card">
-  <div class="strat"><div class="strat-h">如果是长期持仓</div><div class="strat-b">{{x}}</div></div>
-  <div class="strat"><div class="strat-h">如果做波段</div><div class="strat-b">{{x}}</div></div>
-  <div class="strat"><div class="strat-h">如果做 T</div><div class="strat-b">{{x}}</div></div>
+  <div class="strat"><div class="strat-h">{{策略档1}}</div><div class="strat-b">{{x}}</div></div>
+  <div class="strat"><div class="strat-h">{{策略档2}}</div><div class="strat-b">{{x}}</div></div>
+  <div class="strat"><div class="strat-h">{{策略档3}}</div><div class="strat-b">{{x}}</div></div>
   <div class="strat"><div class="strat-h">风险等级</div><div class="strat-b"><span class="pill p-a">{{中高}}</span>　{{依据}}</div></div>
 </div>
 <div class="verdict">
@@ -247,11 +247,10 @@ footer b{color:var(--ink2)}
 </div></div>
 
 <footer><div style="max-width:680px;margin:0 auto">
-  <b>数据源：</b>Investing.com Pro（已登录账户，{{M/D}} 收盘口径）{{…}}<br>
+  <b>数据源：</b>{{见任务指令}}<br>
   <b>行情性质：</b>{{收盘价，非实时}}；与主站 stockanalysis 口径{{一致/冲突}}，已交叉验证。<br>
   <b>采集时间：</b>{{YYYY-MM-DD}} 东京 {{HH:MM}}。<br><br>
-  以上基于公开信息与用户订阅的 Investing Pro 数据整理，非投资建议，不构成任何买卖推荐。
-  评级为对产业阶段与估值状态的描述性判断，不预测价格。请自行决策，风险自负。
+  {{免责声明——见任务指令}}
 </div></footer>
 
 </div>
