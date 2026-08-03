@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>个股深挖 · 投资台</title>
+<style>
+:root{
+  --bg:#f7f6f3;--card:#fff;--ink:#16181d;--ink2:#4a4f5a;--ink3:#7c8290;
+  --line:#e4e2dd;--up:#0a8f5b;--down:#d0342c;--flat:#7c8290;
+  --s:#b4232a;--a:#c07a15;--b:#5a6270;--acc:#1f4fd8;--wash:#f0efeb;--dark:#12141a;
+  --pro:#5b21b6;--prowash:#f5f3ff;
+}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  padding:0 0 60px}
+.wrap{max-width:680px;margin:0 auto;padding:0 14px}
+
+header{background:var(--dark);color:#fff;padding:18px 0 16px}
+h1{font-size:19px;margin:0 0 3px;font-weight:700}
+.sub{font-size:12.5px;color:#a8adb8;line-height:1.55}
+.sub b{color:#f0f1f4;font-weight:600}
+.probadge{display:inline-block;background:var(--pro);color:#fff;font-size:10.5px;font-weight:700;
+  padding:2px 7px;border-radius:4px;letter-spacing:.5px;vertical-align:2px;margin-left:6px}
+
+.tldr{background:#1c1f27;color:#e8eaee;padding:14px 0 16px}
+.tldr .lab{font-size:11px;letter-spacing:2px;color:#7f8798;font-weight:700;margin-bottom:9px}
+.tldr ol{margin:0;padding-left:19px}
+.tldr li{font-size:14.5px;line-height:1.62;margin-bottom:8px;color:#d5d9e0}
+.tldr li:last-child{margin-bottom:0}
+.tldr b{color:#fff;font-weight:700}
+.tldr .k{color:#ffd166;font-weight:700}
+
+nav{position:sticky;top:0;z-index:50;background:rgba(247,246,243,.96);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:18px}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;font-size:13px;text-decoration:none;color:var(--ink2);
+  background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
+
+h2{font-size:16px;margin:30px 0 4px;font-weight:700;display:flex;align-items:baseline;gap:8px}
+h2 .n{font-size:11px;font-weight:700;color:#fff;background:var(--dark);border-radius:4px;
+  padding:2px 6px;letter-spacing:.5px}
+.lead{font-size:13px;color:var(--ink3);margin:0 0 12px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px;margin-bottom:11px}
+
+.conflict{border:2px solid var(--s);border-radius:10px;padding:0;overflow:hidden;margin-bottom:12px}
+.conflict-h{background:var(--s);color:#fff;padding:9px 14px;font-size:13.5px;font-weight:700}
+.conflict-b{background:var(--card);padding:14px}
+.sig{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.sig:first-child{border-top:0;padding-top:0}
+.sig-l{flex:0 0 92px}
+.sig-n{font-size:12px;color:var(--ink3);font-weight:600}
+.sig-v{font-size:16px;font-weight:700;line-height:1.3;margin-top:2px}
+.sig-r{flex:1;min-width:0;font-size:13.5px;color:var(--ink2);line-height:1.55}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl td{padding:8px 0;border-top:1px solid var(--line)}
+.tbl tr:first-child td{border-top:0}
+.tbl td:first-child{color:var(--ink3);font-size:13px;width:44%}
+.tbl td:last-child{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.down{color:var(--down)}
+
+.warn{background:#fff8e6;border:2px solid var(--a);border-radius:10px;padding:0;overflow:hidden;margin-bottom:12px}
+.warn-h{background:var(--a);color:#fff;padding:9px 14px;font-size:13.5px;font-weight:700}
+.warn-b{padding:14px;font-size:14.5px;line-height:1.7;color:#5c3d05}
+.warn-b b{color:#3d2903;font-weight:700}
+.tl{margin:13px 0 0;padding:12px;background:#fff;border:1px solid #f0dfae;border-radius:8px}
+.tl-i{display:flex;gap:10px;padding:7px 0;border-top:1px dashed #f0dfae;font-size:13.5px}
+.tl-i:first-child{border-top:0;padding-top:0}
+.tl-d{flex:0 0 58px;font-weight:700;color:var(--a);font-variant-numeric:tabular-nums}
+.tl-t{flex:1;color:#5c3d05}
+.tl-i.hot .tl-d{color:var(--down)}
+.tl-i.hot .tl-t{font-weight:600}
+
+.kv{margin-bottom:13px}
+.kv:last-child{margin-bottom:0}
+.kv-k{font-size:12px;font-weight:700;color:var(--ink);letter-spacing:.3px;margin-bottom:3px}
+.kv-v{font-size:14.5px;color:var(--ink2);line-height:1.65}
+.kv-v b{color:var(--ink);font-weight:650}
+
+.strat{border-top:1px solid var(--line);padding:12px 0}
+.strat:first-of-type{border-top:0;padding-top:0}
+.strat-h{font-size:13.5px;font-weight:700;margin-bottom:4px}
+.strat-b{font-size:14px;color:var(--ink2);line-height:1.65}
+
+.verdict{background:var(--dark);color:#e8eaee;border-radius:10px;padding:15px;margin-bottom:11px}
+.verdict-h{font-size:11px;letter-spacing:2px;color:#7f8798;font-weight:700;margin-bottom:8px}
+.verdict-b{font-size:15px;line-height:1.7}
+.verdict-b b{color:#fff;font-weight:700}
+.verdict-b .k{color:#ffd166;font-weight:700}
+
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px}
+.p-s{background:var(--s);color:#fff}.p-a{background:var(--a);color:#fff}.p-b{background:var(--b);color:#fff}
+.p-up{background:#e6f5ee;color:var(--up)}.p-dn{background:#fdeceb;color:var(--down)}
+.p-pro{background:var(--prowash);color:var(--pro);border:1px solid #ddd6fe}
+
+.note{font-size:12.5px;color:var(--ink3);line-height:1.7;margin-top:8px}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;
+  color:var(--ink3);line-height:1.75}
+footer b{color:var(--ink2)}
+</style>
+</head>
+
+<!-- ═══════════════════════════════════════════════════════════
+     个股深挖 · 版式模板（纯骨架，不含任何数据）
+     用法：复制本文件 → 把所有 {{...}} 占位符换成本期内容 → 加密 → 提交
+     红线：本文件可公开；填好数据后的成品明文一律不得提交进仓库
+     ═══════════════════════════════════════════════════════════ -->
+<body>
+
+<header><div class="wrap">
+  <h1>个股深挖 · {{代码}} {{公司中文名}}<span class="probadge">PRO 数据</span></h1>
+  <div class="sub">
+    <b>第 {{N}} 期 · 轮换序列 {{N}}/23 · 数据截至 {{YYYY-MM-DD}} 美东收盘</b><br>
+    估值与评级来自 Investing.com Pro（已登录账户）· 生成于 {{MM-DD}} 东京 {{HH:MM}}
+  </div>
+</div></header>
+
+<!-- 30秒速读：5 条，每条一句话，最关键的用 <span class="k"> 高亮 -->
+<div class="tldr"><div class="wrap">
+  <div class="lab">30 秒速读</div>
+  <ol>
+    <li>{{结论1}}</li>
+    <li>{{结论2}}</li>
+    <li>⚠ {{结论3：时间错配或风险，用 <span class="k">高亮</span>}}</li>
+    <li>{{结论4}}</li>
+    <li>{{结论5}}</li>
+  </ol>
+</div></div>
+
+<nav><div class="wrap">
+  <a href="./" style="background:#12141a;color:#fff;border-color:#12141a">← 首页</a>
+  <a href="#conflict">信号打架</a><a href="#pro">Pro 数据</a><a href="#kline">那根K线</a>
+  <a href="#position">你的持仓</a><a href="#fund">基本面</a><a href="#strat">策略</a><a href="#miss">未取到</a>
+</div></nav>
+
+<div class="wrap">
+
+<!-- 01 ───────────────────────────────────────────── -->
+<h2 id="conflict"><span class="n">01</span>三个信号在打架</h2>
+<p class="lead">{{一句话导语；三者若一致，改写成「本期三者一致，指向…」，一致本身也是信息}}</p>
+<div class="conflict">
+  <div class="conflict-h">同一只股票，同一天，三种结论</div>
+  <div class="conflict-b">
+    <div class="sig">
+      <div class="sig-l"><div class="sig-n">公允价值模型</div><div class="sig-v">{{+X.XX%}}</div></div>
+      <div class="sig-r">{{解读}}</div>
+    </div>
+    <div class="sig">
+      <div class="sig-l"><div class="sig-n">技术面评级</div><div class="sig-v" style="color:var(--down)">{{Strong Sell}}</div></div>
+      <div class="sig-r">{{解读}}</div>
+    </div>
+    <div class="sig">
+      <div class="sig-l"><div class="sig-n">分析师目标价</div><div class="sig-v" style="color:var(--up)">{{+XX%}}</div></div>
+      <div class="sig-r">{{解读}}</div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="kv-k">怎么读这个矛盾</div>
+  <div class="kv-v">{{三者在回答三个不同的问题 → 分别是什么 → 可操作的判断}}</div>
+</div>
+
+<!-- 02 ───────────────────────────────────────────── -->
+<h2 id="pro"><span class="n">02</span>Pro 数据全表</h2>
+<p class="lead">以下均来自 Investing.com Pro 已登录账户，{{M/D}} 收盘口径。</p>
+<div class="card">
+  <table class="tbl">
+    <tr><td>收盘价</td><td class="down">{{价}}　{{−X.XX%}}</td></tr>
+    <tr><td>公允价值 Fair Value</td><td>{{值}}　{{+X.XX%}}</td></tr>
+    <tr><td>分析师目标价</td><td class="up">{{值}}　{{+XX%}}</td></tr>
+    <tr><td>技术面评级</td><td><span class="pill p-dn">{{Strong Sell}}</span></td></tr>
+    <tr><td>分析师情绪</td><td><span class="pill p-up">{{Strong Buy}}</span></td></tr>
+    <tr><td>前收 / 开盘</td><td>{{x}} / {{x}}</td></tr>
+    <tr><td>当日区间</td><td>{{低}} – {{高}}</td></tr>
+    <tr><td>52 周区间</td><td>{{低}} – {{高}}</td></tr>
+    <tr><td>成交量 / 3月均量</td><td>{{x}} / {{x}}</td></tr>
+    <tr><td>市值</td><td>{{x}}</td></tr>
+    <tr><td>P/E</td><td>{{x}}</td></tr>
+    <tr><td>EPS</td><td>{{x}}</td></tr>
+    <tr><td>营收（TTM）</td><td>{{x}}</td></tr>
+    <tr><td>Beta</td><td>{{x}}</td></tr>
+    <tr><td>股息（收益率）</td><td>{{x}}</td></tr>
+    <tr><td>下次财报</td><td style="color:var(--down)">{{YYYY-MM-DD}}</td></tr>
+  </table>
+  <div class="note">{{挑 2-3 个数字做解读，如 Beta 的放大倍数含义、周期股 PE 要反着读}}</div>
+</div>
+
+<!-- 03 ───────────────────────────────────────────── -->
+<h2 id="kline"><span class="n">03</span>{{M/D}} 那根 K 线说明了什么</h2>
+<div class="card"><div class="kv-v">
+  {{把前收→开盘→最高→最低→收盘五个价格连起来还原当天多空交战；
+    振幅与收盘位置说明什么；成交量 vs 均量 → 是情绪宣泄还是持续卖压}}
+</div></div>
+
+<!-- 04 ───────────────────────────────────────────── -->
+<h2 id="position"><span class="n">04</span>你的持仓{{：本期发现}}</h2>
+<p class="lead">{{持仓描述——从任务指令里取，不要写进本模板}}</p>
+<div class="warn">
+  <div class="warn-h">⚠ {{一句话说清错配或叠加}}</div>
+  <div class="warn-b">
+    {{财报日 / 宏观事件日 / 持仓到期日 三者的时间关系，以及这意味着实际在赌什么}}
+    <div class="tl">
+      <div class="tl-i"><div class="tl-d">{{M/D}}</div><div class="tl-t">{{事件}}</div></div>
+      <div class="tl-i hot"><div class="tl-d">{{M/D}}</div><div class="tl-t">{{关键事件用 hot 标红}}</div></div>
+    </div>
+    <div style="margin-top:13px">{{结论：只做处境判断，不给操作建议}}</div>
+  </div>
+</div>
+
+<!-- 05 ───────────────────────────────────────────── 六项固定，勿增删 -->
+<h2 id="fund"><span class="n">05</span>基本面</h2>
+<div class="card">
+  <div class="kv"><div class="kv-k">公司属性</div><div class="kv-v">{{x}}</div></div>
+  <div class="kv"><div class="kv-k">产业链位置</div><div class="kv-v">{{x}}</div></div>
+  <div class="kv"><div class="kv-k">长期驱动</div><div class="kv-v">{{x}}</div></div>
+  <div class="kv"><div class="kv-k">短期催化</div><div class="kv-v">{{x}}</div></div>
+  <div class="kv"><div class="kv-k">核心竞争力</div><div class="kv-v">{{x}}</div></div>
+  <div class="kv"><div class="kv-k">风险</div><div class="kv-v">{{x}}</div></div>
+</div>
+
+<!-- 06 ───────────────────────────────────────────── -->
+<h2 id="strat"><span class="n">06</span>交易策略</h2>
+<div class="card">
+  <div class="strat"><div class="strat-h">如果是长期持仓</div><div class="strat-b">{{x}}</div></div>
+  <div class="strat"><div class="strat-h">如果做波段</div><div class="strat-b">{{x}}</div></div>
+  <div class="strat"><div class="strat-h">如果做 T</div><div class="strat-b">{{x}}</div></div>
+  <div class="strat"><div class="strat-h">风险等级</div><div class="strat-b"><span class="pill p-a">{{中高}}</span>　{{依据}}</div></div>
+</div>
+<div class="verdict">
+  <div class="verdict-h">一句话结论</div>
+  <div class="verdict-b">{{结论先行，敢下判断，关键处用 <span class="k">高亮</span>}}</div>
+</div>
+
+<!-- 07 ───────────────────────────────────────────── 必须保留，不得省略 -->
+<h2 id="miss"><span class="n">07</span>本次未取到</h2>
+<div class="card"><div class="kv-v" style="font-size:13.5px">
+  · {{未取到项1}}<br>· {{未取到项2}}<br>
+  以上是「未取到」，不是「没有」。本页所有数字宁可留白，不用推测值填空。
+</div></div>
+
+<footer><div style="max-width:680px;margin:0 auto">
+  <b>数据源：</b>Investing.com Pro（已登录账户，{{M/D}} 收盘口径）{{…}}<br>
+  <b>行情性质：</b>{{收盘价，非实时}}；与主站 stockanalysis 口径{{一致/冲突}}，已交叉验证。<br>
+  <b>采集时间：</b>{{YYYY-MM-DD}} 东京 {{HH:MM}}。<br><br>
+  以上基于公开信息与用户订阅的 Investing Pro 数据整理，非投资建议，不构成任何买卖推荐。
+  评级为对产业阶段与估值状态的描述性判断，不预测价格。请自行决策，风险自负。
+</div></footer>
+
+</div>
+</body>
+</html>
