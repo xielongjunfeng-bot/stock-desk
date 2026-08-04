@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>投资台 · AI 产业链</title>
+<style>
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+html,body{margin:0;padding:0}
+body{background:#f6f6f4;color:#0f1216;
+ font:16px/1.68 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",system-ui,sans-serif}
+.wrap{max-width:430px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 60px rgba(0,0,0,.06);
+ padding-bottom:60px}
+.num{font-variant-numeric:tabular-nums}
+.up{color:#12805c}.dn{color:#c0362c}
+/* 板块色 */
+:root{
+ --c-rate:#3b5bdb; --c-mem:#e07b26; --c-cloud:#0d9488; --c-kr:#7c3aed; --c-val:#db2777;
+ --bg-rate:#eef1fd; --bg-mem:#fdf1e6; --bg-cloud:#e6f6f4; --bg-kr:#f3edfe; --bg-val:#fdeef5;
+}
+
+/* ── 头部 ── */
+header{padding:26px 20px 18px;border-bottom:1px solid #f0efec}
+.eyebrow{font-size:10.5px;letter-spacing:2.6px;color:#b3b7bc;font-weight:700;text-transform:uppercase;
+ display:flex;justify-content:space-between;align-items:center}
+.slot{background:#0f1216;color:#fff;border-radius:20px;padding:3px 10px;letter-spacing:.6px;font-size:10px}
+h1{font-size:20px;line-height:1.45;margin:12px 0 8px;font-weight:600;letter-spacing:-.3px}
+.date{font-size:12px;color:#a2a7ad}
+nav{display:flex;gap:6px;overflow-x:auto;padding:12px 20px;border-bottom:1px solid #f0efec;
+ position:sticky;top:0;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);z-index:60;
+ scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;font-size:12.5px;text-decoration:none;color:#5b6167;border:1px solid #eceae6;
+ border-radius:20px;padding:5px 12px;white-space:nowrap}
+nav a.hi{background:#0f1216;color:#fff;border-color:#0f1216;font-weight:600}
+
+.sec{padding:24px 20px;border-top:8px solid #f4f4f2}
+.sec:first-of-type{border-top:0}
+.sec-t{font-size:10.5px;letter-spacing:2.6px;color:#b3b7bc;font-weight:700;margin-bottom:14px;
+ text-transform:uppercase;display:flex;justify-content:space-between;align-items:baseline}
+.sec-t em{font-style:normal;color:#c9cdd2;letter-spacing:0;font-weight:600;font-size:11px}
+
+/* ── ① 四盏灯 ── */
+.lamps{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.lamp{border:1px solid #eceae6;border-radius:11px;padding:12px 13px;position:relative}
+.lamp .top{display:flex;align-items:center;gap:7px}
+.lamp i{width:12px;height:12px;border-radius:50%;flex:0 0 12px}
+.i-r{background:#e0483c;box-shadow:0 0 0 4px #fdeceb}
+.i-y{background:#e8a317;box-shadow:0 0 0 4px #fdf5e4}
+.i-g{background:#19a06b;box-shadow:0 0 0 4px #e7f6ef}
+.lamp .nm{font-size:12.5px;font-weight:600;color:#5b6167}
+.lamp .v{font-size:23px;font-weight:600;letter-spacing:-.8px;line-height:1.1;margin:9px 0 3px}
+.lamp .s{font-size:10.5px;color:#a2a7ad;line-height:1.4}
+.lamp .chg{position:absolute;right:10px;top:10px;font-size:9.5px;font-weight:700;padding:1px 5px;border-radius:3px}
+.c-up{background:#e7f6ef;color:#12805c}.c-dn{background:#fdeceb;color:#c0362c}
+
+/* ── 持仓条 ── */
+.pos{margin-top:12px;border:1px solid #eceae6;border-radius:11px;padding:13px}
+.posrow{display:flex;justify-content:space-between;align-items:baseline}
+.posk{font-size:32px;font-weight:600;letter-spacing:-1.4px;line-height:1}
+.posn{font-size:11.5px;color:#a2a7ad;text-align:right;line-height:1.4}
+.bar{height:6px;background:#f0efec;border-radius:3px;position:relative;margin:13px 0 6px}
+.bar i{position:absolute;left:0;top:0;height:6px;background:#0f1216;border-radius:3px;width:68.1%}
+.bar u{position:absolute;left:68.1%;top:-5px;width:2px;height:16px;background:#c0362c}
+.barl{display:flex;justify-content:space-between;font-size:10.5px;color:#a2a7ad}
+
+/* ── ② 关键词筛选（纯 CSS） ── */
+.kwin{position:absolute;opacity:0;pointer-events:none}
+.kwbar{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:4px;scrollbar-width:none}
+.kwbar::-webkit-scrollbar{display:none}
+.kwbar label{flex:0 0 auto;font-size:12.5px;font-weight:600;border-radius:20px;padding:5px 12px;
+ cursor:pointer;border:1px solid #eceae6;color:#5b6167;background:#fff;user-select:none;white-space:nowrap}
+.kwbar label b{font-weight:700;opacity:.5;margin-left:3px;font-size:11px}
+#k-all:checked~.kwbar label[for=k-all]{background:#0f1216;color:#fff;border-color:#0f1216}
+#k-rate:checked~.kwbar label[for=k-rate]{background:var(--c-rate);color:#fff;border-color:var(--c-rate)}
+#k-mem:checked~.kwbar label[for=k-mem]{background:var(--c-mem);color:#fff;border-color:var(--c-mem)}
+#k-cloud:checked~.kwbar label[for=k-cloud]{background:var(--c-cloud);color:#fff;border-color:var(--c-cloud)}
+#k-kr:checked~.kwbar label[for=k-kr]{background:var(--c-kr);color:#fff;border-color:var(--c-kr)}
+#k-val:checked~.kwbar label[for=k-val]{background:var(--c-val);color:#fff;border-color:var(--c-val)}
+#k-rate:checked~.feed .it:not(.rate),
+#k-mem:checked~.feed .it:not(.mem),
+#k-cloud:checked~.feed .it:not(.cloud),
+#k-kr:checked~.feed .it:not(.kr),
+#k-val:checked~.feed .it:not(.val){display:none}
+
+/* 精读条目 */
+.it{border:1px solid #eceae6;border-radius:11px;margin-bottom:9px;overflow:hidden;position:relative}
+.it::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.it.rate::before{background:var(--c-rate)}
+.it.mem::before{background:var(--c-mem)}
+.it.cloud::before{background:var(--c-cloud)}
+.it.kr::before{background:var(--c-kr)}
+.it.val::before{background:var(--c-val)}
+.it>summary{list-style:none;cursor:pointer;padding:13px 15px 13px 17px}
+.it>summary::-webkit-details-marker{display:none}
+.it .hd{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.it h3{font-size:15.5px;font-weight:600;margin:0;line-height:1.45;letter-spacing:-.2px}
+.it .exp{flex:0 0 auto;font-size:11px;color:#b3b7bc;border:1px solid #eceae6;border-radius:20px;
+ padding:2px 8px;font-weight:600;margin-top:2px}
+.it[open] .exp::after{content:"收起"}
+.it:not([open]) .exp::after{content:"展开"}
+.it .abs{font-size:13px;color:#7c8288;margin-top:6px;line-height:1.55}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.chip{font-size:10.5px;font-weight:700;border-radius:5px;padding:2px 7px;letter-spacing:.2px}
+.ch-rate{background:var(--bg-rate);color:var(--c-rate)}
+.ch-mem{background:var(--bg-mem);color:var(--c-mem)}
+.ch-cloud{background:var(--bg-cloud);color:var(--c-cloud)}
+.ch-kr{background:var(--bg-kr);color:var(--c-kr)}
+.ch-val{background:var(--bg-val);color:var(--c-val)}
+.ch-n{background:#f4f4f2;color:#7c8288}
+.body{padding:2px 15px 15px 17px;border-top:1px solid #f4f4f2;margin-top:0}
+.l{display:flex;gap:9px;margin-top:12px}
+.l .k{flex:0 0 42px;font-size:10.5px;font-weight:700;letter-spacing:.5px;padding-top:4px;color:#b3b7bc}
+.l .x{flex:1;font-size:14px;color:#4a5057;line-height:1.65}
+.l .x b{color:#0f1216;font-weight:600}
+.dl{margin-top:13px;border-top:1px dashed #eceae6;padding-top:11px}
+.dl div{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;color:#7c8288}
+.dl div span:last-child{font-weight:600;color:#0f1216}
+.src{font-size:11px;color:#b3b7bc;margin-top:11px;line-height:1.5}
+
+/* ── ④ 日历 ── */
+svg{display:block;width:100%;height:auto}
+.cal{margin-top:12px}
+.cr{display:flex;gap:11px;padding:9px 0;border-top:1px solid #f4f4f2;align-items:baseline}
+.cr:first-child{border-top:0}
+.cr .d{flex:0 0 44px;font-size:12.5px;font-weight:700;color:#a2a7ad}
+.cr .t{flex:1;font-size:13.5px;line-height:1.5;color:#4a5057}
+.cr.hot{background:#fff7f6;margin:0 -8px;padding:9px 8px;border-radius:6px;border-top-color:transparent}
+.cr.hot .d{color:#c0362c}.cr.hot .t{color:#0f1216;font-weight:600}
+.cr.gold .d{color:#b8860b}.cr.gold .t b{color:#b8860b}
+
+/* ── ⑤ 指数 ── */
+.idx{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.idx div{border:1px solid #eceae6;border-radius:9px;padding:10px 12px}
+.idx .n{font-size:11px;color:#a2a7ad}
+.idx .v{font-size:16px;font-weight:600;letter-spacing:-.3px;margin-top:2px}
+.idx .p{font-size:11.5px;color:#a2a7ad}
+.heat{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.h{border-radius:6px;padding:9px 3px;text-align:center;color:#fff}
+.h .t{font-size:11px;font-weight:700}
+.h .p{font-size:10.5px;opacity:.94;margin-top:1px}
+.g5{background:#0d7a4e}.g3{background:#3d9c70}.g1{background:#8cc4a8}
+.n0{background:#c3c7cc}.r1{background:#e0a9a3}.r3{background:#c85a4e}.r5{background:#a52f26}
+.hgrp{font-size:10.5px;color:#a2a7ad;font-weight:700;margin:13px 0 6px;letter-spacing:1px}
+.hgrp em{font-style:normal;color:#c0362c}
+
+/* ── ⑥ 逻辑链 ── */
+.step{display:flex;gap:12px;position:relative;padding-bottom:16px}
+.step:last-child{padding-bottom:0}
+.step .no{flex:0 0 26px;height:26px;border-radius:50%;background:#0f1216;color:#fff;font-size:12px;
+ font-weight:700;display:flex;align-items:center;justify-content:center;z-index:2}
+.step::before{content:"";position:absolute;left:13px;top:26px;bottom:-2px;width:2px;background:#eceae6}
+.step:last-child::before{display:none}
+.step .c{flex:1;padding-top:2px}
+.step .c h4{font-size:14px;margin:0 0 4px;font-weight:600;line-height:1.45}
+.step .c p{font-size:13.5px;color:#7c8288;margin:0;line-height:1.6}
+.verdict{background:#0f1216;color:#e9ebef;border-radius:11px;padding:15px;margin-top:16px;font-size:14.5px;line-height:1.7}
+.verdict b{color:#fff}
+.verdict .kk{color:#ffd166;font-weight:700}
+
+details.more{border-top:1px solid #f0efec;padding:15px 20px}
+details.more>summary{list-style:none;cursor:pointer;font-size:15px;font-weight:600;display:flex;justify-content:space-between}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"＋";color:#c9cdd2;font-weight:400}
+details.more[open]>summary::after{content:"－"}
+details.more p{font-size:13.5px;color:#5b6167;margin:12px 0 0;line-height:1.65}
+a.more{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;
+ border-top:1px solid #f0efec;font-size:15px;font-weight:600;color:#0f1216;text-decoration:none}
+a.more .ar{color:#c9cdd2;font-weight:400}
+a.more.hi{background:#0f1216;color:#fff;border-radius:0}
+a.more.hi .ar{color:#7c8288}
+footer{padding:24px 20px 0;border-top:8px solid #f4f4f2;margin-top:8px;font-size:11px;color:#b3b7bc;line-height:1.75}
+</style></head><body><div class="wrap">
+
+<header>
+  <div class="eyebrow"><span>投资台 · AI 产业链</span><span class="slot">{{档位}}</span></div>
+  <h1>{{今日一句话标题——不超过 30 字，直接给判断}}</h1>
+  <div class="date">最后更新 {{MM月DD日 HH:MM}} JST ｜ 数据截至 {{M/D}} 美东收盘 ｜ 下次 {{HH:MM}} {{档位}}</div>
+</header>
+
+<nav>
+  <a class="hi" href="deep-dive.html">个股深挖 →</a>
+  <a href="#s1">四盏灯</a><a href="#s2">今日精读</a><a href="#s3">日历</a>
+  <a href="#s4">指数</a><a href="#s5">逻辑链</a><a href="learn.html">学习路径</a>
+</nav>
+
+<!-- ① 四盏灯 -->
+<div class="sec" id="s1">
+  <div class="sec-t"><span>① 四盏灯</span><em>vs 上一版</em></div>
+  <div class="lamps">
+    <!-- 四盏固定：长端利率 / 存储涨价动能 / 云厂capex / 风险偏好
+         灯色 class：i-r 红 · i-y 黄 · i-g 绿；变化标签 c-up 转好 / c-dn 转差，无变化则删掉该 span -->
+    <div class="lamp">
+      <div class="top"><i class="{{i-r|i-y|i-g}}"></i><span class="nm">{{灯1名}}</span></div>
+      <div class="v num">{{关键数字}}</div><div class="s">{{一句话读数}}</div>
+    </div>
+    <div class="lamp"><span class="chg {{c-up|c-dn}}">{{旧→新}}</span>
+      <div class="top"><i class="{{i-r|i-y|i-g}}"></i><span class="nm">{{灯2名}}</span></div>
+      <div class="v num">{{关键数字}}</div><div class="s">{{一句话读数}}</div>
+    </div>
+    <div class="lamp">
+      <div class="top"><i class="{{i-r|i-y|i-g}}"></i><span class="nm">{{灯3名}}</span></div>
+      <div class="v num">{{关键数字}}</div><div class="s">{{一句话读数}}</div>
+    </div>
+    <div class="lamp"><span class="chg {{c-up|c-dn}}">{{旧→新}}</span>
+      <div class="top"><i class="{{i-r|i-y|i-g}}"></i><span class="nm">{{灯4名}}</span></div>
+      <div class="v num">{{关键数字}}</div><div class="s">{{一句话读数}}</div>
+    </div>
+  </div>
+
+  <!-- 持仓条：具体持仓内容见任务指令，不要写进本模板 -->
+  <div class="pos">
+    <div class="posrow">
+      <div><div class="posk num">{{倒计时}}</div><div style="font-size:11px;color:#a2a7ad;margin-top:2px">{{单位说明}}</div></div>
+      <div class="posn">{{持仓标识}}<br><span class="dn num" style="font-size:14px;font-weight:600">{{距目标}}</span></div>
+    </div>
+    <div class="bar"><i style="width:{{百分比}}%"></i><u style="left:{{百分比}}%"></u></div>
+    <div class="barl"><span class="num">{{左端}}</span><span class="num">{{当前}}</span><span class="num">{{右端}}</span></div>
+  </div>
+</div>
+
+<!-- ② 今日精读 -->
+<div class="sec" id="s2">
+  <div class="sec-t"><span>② 今日精读</span><em>6 条 · 点关键词筛选</em></div>
+
+  <input class="kwin" type="radio" name="kw" id="k-all" checked>
+  <input class="kwin" type="radio" name="kw" id="k-rate">
+  <input class="kwin" type="radio" name="kw" id="k-mem">
+  <input class="kwin" type="radio" name="kw" id="k-cloud">
+  <input class="kwin" type="radio" name="kw" id="k-kr">
+  <input class="kwin" type="radio" name="kw" id="k-val">
+
+  <!-- 关键词固定 6 类，b 里填当天该类条目数；某类当天为 0 就整个 label 删掉 -->
+  <div class="kwbar">
+    <label for="k-all">全部<b>{{n}}</b></label>
+    <label for="k-rate">利率<b>{{n}}</b></label>
+    <label for="k-mem">存储<b>{{n}}</b></label>
+    <label for="k-cloud">云厂capex<b>{{n}}</b></label>
+    <label for="k-kr">韩股<b>{{n}}</b></label>
+    <label for="k-val">估值情绪<b>{{n}}</b></label>
+  </div>
+
+  <div class="feed">
+
+    <!-- ↓↓↓ 精读条目模板：复制这一整块，每条一个。当天有几条就放几条（建议 4–7 条）
+         · class="it" 后接主题 class，可多个：rate / mem / cloud / kr / val
+           一条可同时属于多个主题（例：class="it kr mem val"），点任一关键词都会出现
+         · 第一条加 open 属性默认展开，其余不加
+         · summary 里只放：标题 + 一行概要 + 关键词标签
+         · body 里放完整内容：三行式 + 数据表 + 来源/冲突标注。信息不许因为折叠而删减
+    -->
+    <details class="it {{主题class}}" open>
+      <summary>
+        <div class="hd"><h3>{{标题——一句话说清结论，不超过 20 字}}</h3><span class="exp"></span></div>
+        <div class="abs">{{一行概要——40 字内，看完这行就知道要不要展开}}</div>
+        <div class="chips">
+          <span class="chip ch-{{rate|mem|cloud|kr|val}}">{{主题名}}</span>
+          <span class="chip ch-n">{{相关标的}}</span>
+          <span class="chip ch-n">{{观察|跟踪|忽略}}</span>
+        </div>
+      </summary>
+      <div class="body">
+        <div class="l"><div class="k">发生了</div><div class="x">{{事实，带数字，关键处用 <b>粗体</b>}}</div></div>
+        <div class="l"><div class="k">为什么</div><div class="x">{{为什么重要——落到对持仓或对判断的影响}}</div></div>
+        <div class="l"><div class="k">怎么办</div><div class="x"><b>{{观察|跟踪|忽略}}</b>。{{一句话理由}}</div></div>
+        <div class="dl">
+          <div><span>{{指标名}}</span><span class="num">{{值}}</span></div>
+          <div><span>{{指标名}}</span><span class="up num">{{值}}</span></div>
+          <div><span>{{指标名}}</span><span class="dn num">{{值}}</span></div>
+        </div>
+        <div class="src">{{来源；以及本条的口径冲突／未取到说明，没有就删掉这一行}}</div>
+      </div>
+    </details>
+
+  </div>
+</div>
+
+<!-- ③ 日历 -->
+<div class="sec" id="s3">
+  <div class="sec-t"><span>③ 今后的日历</span><em>到期前 34 个交易日</em></div>
+  <!-- 时间轴：cx 按日期在窗口内的位置线性分布（14=起点, 376=终点）
+       普通事件 r=4.5 灰 #b3b7bc；产业级催化剂 r=7 金 #b8860b；宏观关键 r=7 红 #c0362c；
+       持仓相关日 r=8.5 黑 #0f1216；到期之后的事件用虚线空心圆 -->
+  <svg viewBox="0 0 390 104" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,system-ui,sans-serif">
+    <line x1="14" y1="50" x2="376" y2="50" stroke="#e8e6e2" stroke-width="2"/>
+    <line x1="{{高压区起}}" y1="50" x2="{{高压区止}}" y2="50" stroke="#f5d9d6" stroke-width="7"/>
+    <circle cx="{{x}}" cy="50" r="4.5" fill="#b3b7bc"/>
+    <text x="{{x}}" y="34" font-size="10" font-weight="700" fill="#a2a7ad" text-anchor="middle">{{M/D}}</text>
+    <text x="{{x}}" y="70" font-size="9.5" fill="#a2a7ad" text-anchor="middle">{{事件}}</text>
+    <circle cx="{{x}}" cy="50" r="7" fill="#b8860b"/>
+    <text x="{{x}}" y="32" font-size="10.5" font-weight="700" fill="#9a710a" text-anchor="middle">{{M/D}}</text>
+    <text x="{{x}}" y="70" font-size="10" font-weight="600" fill="#9a710a" text-anchor="middle">{{事件}}</text>
+    <text x="{{x}}" y="83" font-size="9" fill="#b8860b" text-anchor="middle">{{补充说明}}</text>
+    <circle cx="{{x}}" cy="50" r="8.5" fill="#0f1216"/>
+    <text x="{{x}}" y="30" font-size="11" font-weight="700" fill="#0f1216" text-anchor="middle">{{M/D}}</text>
+    <text x="{{x}}" y="72" font-size="10" font-weight="700" fill="#0f1216" text-anchor="middle">{{事件}}</text>
+  </svg>
+  <!-- 列表：只列有确切日期的。cr hot = 与持仓直接相关（浅红底）；cr gold = 产业级催化剂 -->
+  <div class="cal">
+    <div class="cr"><div class="d num">{{M/D}}</div><div class="t">{{事件与一句话说明}}</div></div>
+    <div class="cr gold"><div class="d num">{{M/D}}</div><div class="t"><b>{{事件}}</b> — {{为什么重要}}</div></div>
+    <div class="cr hot"><div class="d num">{{M/D}}</div><div class="t"><b>{{与持仓直接相关的事件}}</b></div></div>
+  </div>
+  <details class="more" style="border-bottom:1px solid #f0efec;padding-left:0;padding-right:0">
+    <summary>无确切日期但很重要的 {{n}} 件事</summary>
+    <p>{{逐条写，用 &lt;br&gt;&lt;br&gt; 分隔}}</p>
+  </details>
+</div>
+
+<!-- ④ 指数 -->
+<div class="sec" id="s4">
+  <div class="sec-t"><span>④ 指数与自选股</span><em>7/31 收盘 · 25 只已复核</em></div>
+  <!-- 指数卡：4 个指数 + 2 个利率。涨用 up、跌用 dn -->
+  <div class="idx">
+    <div><div class="n">{{指数名}}</div><div class="v num {{up|dn}}">{{涨跌%}}</div><div class="p num">{{点位}}</div></div>
+    <div><div class="n">{{指数名}}</div><div class="v num {{up|dn}}">{{涨跌%}}</div><div class="p num">{{点位}}</div></div>
+    <div><div class="n">{{指数名}}</div><div class="v num {{up|dn}}">{{涨跌%}}</div><div class="p num">{{点位}}</div></div>
+    <div><div class="n">{{指数名}}</div><div class="v num {{up|dn}}">{{涨跌%}}</div><div class="p num">{{点位}}</div></div>
+    <div><div class="n">{{利率名}}</div><div class="v num">{{值}}</div><div class="p num">{{口径与日期}}</div></div>
+    <div><div class="n">{{利率名}}</div><div class="v num {{up|dn}}">{{值}}</div><div class="p num">{{水位说明}}</div></div>
+  </div>
+  <p style="font-size:12px;color:#b3b7bc;margin:0 0 4px">{{本节未取到项，没有就删掉这一行}}</p>
+
+  <!-- 热力图：色阶按涨跌幅绝对值选
+       ≥5% g5 / 2–5% g3 / 0.5–2% g1 / ±0.5% n0 / −0.5~−2% r1 / −2~−5% r3 / ≤−5% r5
+       每组一行 .hgrp + 一个 .heat 网格；持仓所在板块的 hgrp 里加 <em>← 你的仓位在这一格</em> -->
+  <div class="hgrp">{{板块名}}</div>
+  <div class="heat">
+    <div class="h {{色阶}}"><div class="t">{{代码}}</div><div class="p">{{±X.X}}</div></div>
+  </div>
+
+  <details class="more" style="padding-left:0;padding-right:0">
+    <summary>完整收盘表（带价格 · {{n}} 只）</summary>
+    <p>{{代码 价格 ｜ 代码 价格 …}}</p>
+  </details>
+  <details class="more" style="padding-left:0;padding-right:0">
+    <summary>数据冲突标注（{{n}} 处，不择一采信）</summary>
+    <p>{{逐条列出，没有冲突就整块删掉}}</p>
+  </details>
+</div>
+
+<!-- ⑤ 逻辑链 -->
+<div class="sec" id="s5">
+  <div class="sec-t"><span>⑤ 当天涨跌逻辑链</span><em>7/31 · 5 步因果</em></div>
+  <!-- 5 步因果，编号圆点自动连线。最后一张深色卡片给一句话判读 -->
+  <div class="step"><div class="no">1</div><div class="c">
+    <h4>{{这一步的小标题}}</h4>
+    <p>{{事实与数字}}</p></div></div>
+  <div class="step"><div class="no">2</div><div class="c">
+    <h4>{{小标题}}</h4><p>{{内容}}</p></div></div>
+  <div class="step"><div class="no">3</div><div class="c">
+    <h4>{{小标题}}</h4><p>{{内容}}</p></div></div>
+  <div class="step"><div class="no">4</div><div class="c">
+    <h4>{{小标题}}</h4><p>{{内容}}</p></div></div>
+  <div class="step"><div class="no">5</div><div class="c">
+    <h4>{{小标题}}</h4><p>{{内容}}</p></div></div>
+  <div class="verdict">
+    <b>一句话判读：</b>{{结论，关键词用 <span class="kk">高亮</span>}}
+  </div>
+</div>
+
+<div style="padding-top:8px">
+<!-- 尾部折叠区：不随每日剧变的内容放这里，默认全部收起 -->
+<details class="more"><summary>{{折叠块标题}}</summary><p>{{内容}}</p></details>
+<details class="more"><summary>本次未取到 / 存疑</summary><p>{{必须保留这一块。逐条列出取不到的数据。以上是「未取到」，不是「没有」。}}</p></details>
+</div>
+
+<a class="more hi" href="deep-dive.html">个股深挖 · {{第 N 期 标的}} <span class="ar">→</span></a>
+<a class="more" href="learn.html">学习路径 · {{本次课程}} <span class="ar">→</span></a>
+
+<footer>
+  {{数据源说明}}<br>
+  收盘价，非实时。本页为个人研究记录，非投资建议，不预测价格，不给目标价。<br>
+  {{更新频率说明}}
+</footer>
+
+</div></body></html>

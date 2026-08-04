@@ -9,6 +9,7 @@
 - `deep-dive.html` — 个股深挖（密文）
 - `tools/encrypt.py` — 加密脚本（不含任何密钥，公开无妨）
 - `tools/decrypt.py` — 解密脚本（本地校验用，同样不含密钥）
+- `tools/index-template.html` — 首页版式骨架（纯 CSS + 占位符，无数据）
 - `tools/deep-dive-template.html` — 深挖页版式骨架（纯 CSS + 占位符，无数据）
 - `tools/state.json` — 深挖期数游标
 
