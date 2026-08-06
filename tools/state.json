@@ -1,8 +1,8 @@
 {
   "_note": "深挖任务的期数游标。只存序号，不存标的代码——轮换序列在任务指令里。每期推送时更新。",
   "deep_dive": {
-    "last_issue": 5,
-    "last_index": 5,
-    "last_updated": "2026-08-05"
+    "last_issue": 6,
+    "last_index": 6,
+    "last_updated": "2026-08-06"
   }
 }
