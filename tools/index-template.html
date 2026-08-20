@@ -191,6 +191,7 @@ nav .tab.on{background:#0f1216;color:#fff;border-color:#0f1216}
 .jrow .jt{font-size:14.5px;font-weight:600;margin:3px 0 4px;line-height:1.5}
 .jrow .jb{font-size:13px;color:#5b6167;line-height:1.6}
 .jrow .jr{font-size:12.5px;margin-top:6px;color:#7c8288}
+@media (prefers-color-scheme:dark){html{filter:invert(.93) hue-rotate(180deg)}}
 </style></head><body><div class="wrap">
 <header>
   <div class="eyebrow"><span>投资台 · AI 产业链</span><span class="slot">{{档位}}</span></div>
@@ -199,15 +200,17 @@ nav .tab.on{background:#0f1216;color:#fff;border-color:#0f1216}
 </header>
 <!-- 页签导航：六页固定，当前页加 class="tab on"。顺序与文件名不许改 -->
 <nav style="display:flex;gap:6px;overflow-x:auto;padding:12px 20px;border-bottom:1px solid #f0efec;position:sticky;top:0;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);z-index:60"><a class="tab on" href="index.html">今日</a><a class="tab" href="market.html">市场</a><a class="tab" href="journal.html">日志</a><a class="tab" href="deep-dive.html">深挖</a><a class="tab" href="learn.html">学习</a><a class="tab" href="indicators.html">指标</a></nav>
+<!-- 顶部横幅卡：今日深挖直达（期数与标的来自 tools/state.json）。每日更新原样保留结构，只改期数与标的。 -->
+<a href="deep-dive.html" style="display:flex;justify-content:space-between;align-items:center;margin:16px 20px 0;padding:15px 18px;background:linear-gradient(135deg,#0f1216,#23272e);color:#fff;border-radius:13px;text-decoration:none;box-shadow:0 4px 14px rgba(16,18,22,.18)"><span><span style="font-size:11px;letter-spacing:1.5px;color:#9aa0a6;font-weight:700">今日深挖</span><br><span style="font-size:16.5px;font-weight:700">{{第 N 期 · 标的}}</span></span><span style="font-size:13px;color:#c9cdd2;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:999px">打开 →</span></a>
+
 <!-- ① 个股速览：置于 nav 之后。热力图按板块分组（色阶规则见 market 模板注释）；
-     下方两个 gopage 按钮：黑底=今日深挖（每日改期数与标的），白底=去市场页。
+     下方 gopage 按钮：白底=去市场页。（今日深挖入口已升级为 nav 下方的顶部横幅卡，不再放黑底按钮）
      当前无持仓（2026-08-20 起）：不生成持仓体检/退出规则/持仓进度条；用户建立新仓位时按任务指令恢复。 -->
 <div class="sec" id="sq">
   <div class="sec-t"><span>① 个股速览</span><em>{{M/D}} 收盘 · 色深=幅度</em></div>
   <div class="hgrp">{{板块名}}</div>
   <div class="heat"><div class="h {{色阶}}"><div class="t">{{代码}}</div><div class="p">{{±X.X}}</div></div></div>
   <p style="font-size:13.5px;color:#5b6167;margin:14px 0 0">{{当日 >±3% 的标的一句话点评}}</p>
-  <a class="gopage" style="background:#0f1216;color:#fff" href="deep-dive.html">今日深挖 · {{第 N 期 标的}} <span style="color:#7c8288">→</span></a>
   <a class="gopage" href="market.html">完整收盘表 · 指数 · 日历 <span>→</span></a>
 </div>
 <!-- 三开关条：写法沿用任务指令已验证的 sec-t + lamps 三格 -->

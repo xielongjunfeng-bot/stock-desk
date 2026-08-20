@@ -51,6 +51,7 @@ label.rm{display:flex;align-items:center;justify-content:center;gap:7px;margin-t
  font-size:13px;color:#7c8290;cursor:pointer;user-select:none}
 label.rm input{width:auto;padding:0;margin:0}
 .foot{margin-top:22px;font-size:11.5px;color:#a8adb8;line-height:1.6}
+@media (prefers-color-scheme:dark){html{filter:invert(.93) hue-rotate(180deg)}}
 </style>
 </head>
 <body>
