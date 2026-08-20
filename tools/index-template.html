@@ -198,40 +198,17 @@ nav .tab.on{background:#0f1216;color:#fff;border-color:#0f1216}
   <div class="date">最后更新 {{MM月DD日 HH:MM}} JST ｜ 数据截至 {{M/D}} 美东收盘 ｜ 下次 {{HH:MM}} {{档位}}</div>
 </header>
 <!-- 页签导航：六页固定，当前页加 class="tab on"。顺序与文件名不许改 -->
-<nav><div class="wrap" style="display:flex;gap:6px;overflow-x:auto"><a class="tab on" href="index.html">今日</a><a class="tab" href="market.html">市场</a><a class="tab" href="journal.html">日志</a><a class="tab" href="deep-dive.html">深挖</a><a class="tab" href="learn.html">学习</a><a class="tab" href="indicators.html">指标</a></div></nav>
-<!-- ⓪ 持仓体检：置于 nav 之后、三开关之前。
-     ★铁律：class="fill" 的内容是用户手填字段。生成时必须先解密线上上一版，
-     把每个 fill 的现值原样抄过来；线上是「待填」就保持「待填」。绝不允许生成一个看起来合理的数字。
-     rulebox 三条同理，只保留结构，动作内容由用户填。持仓具体描述见任务指令。 -->
-<div class="sec" id="s0">
-  <div class="sec-t"><span>⓪ 持仓体检 · {{持仓标识}}</span><em>先看自己，再看世界</em></div>
-  <div class="vit">
-    <div><div class="n">权利金成本（总额）</div><div class="v">{{fill·原样保留}}</div><div class="p">券商 App 期权持仓页可查</div></div>
-    <div><div class="n">期权现值</div><div class="v">{{fill·原样保留}}</div><div class="p">与成本对比即浮动盈亏</div></div>
-    <div><div class="n">盈亏平衡点</div><div class="v num">{{行权价}} + {{fill·原样保留}}</div><div class="p">真正的及格线不是行权价</div></div>
-    <div><div class="n">隐含波动率 IV</div><div class="v">{{fill·原样保留}}</div><div class="p">{{事件日 IV 记录提示}}</div></div>
-    <div><div class="n">日时间损耗 θ</div><div class="v">{{fill·原样保留}}</div><div class="p">越临近到期越大</div></div>
-    <div><div class="n">最大亏损</div><div class="v">＝权利金全额</div><div class="p">深度虚值期权的统计默认结局是归零</div></div>
-  </div>
-  <!-- 持仓进度条（原三开关区的 .pos 移到这里），数值每日更新 -->
-  <div class="pos">
-    <div class="posrow">
-      <div><div class="posk num">{{倒计时}}</div><div style="font-size:11px;color:#a2a7ad;margin-top:2px">{{单位说明}}</div></div>
-      <div class="posn">{{持仓标识}}<br><span class="dn num" style="font-size:14px;font-weight:600">{{距目标}}</span></div>
-    </div>
-    <div class="bar"><i style="width:{{百分比}}%"></i><u style="left:{{百分比}}%"></u></div>
-    <div class="barl"><span class="num">{{左端}}</span><span class="num">{{当前}}</span><span class="num">{{右端}}</span></div>
-  </div>
-  <div class="rulebox">
-    <h4>退出规则（自己写死，只许收紧）</h4>
-    <ol>
-      <li>现值跌破成本 {{fill}} 则 {{fill}}</li>
-      <li>{{最近的关键催化剂}}次日收盘未站上 {{fill}} 则 {{fill}}</li>
-      <li>最迟 {{fill}} 处理完毕，不留到最后一周</li>
-    </ol>
-    <div class="warn">空着 = 本卡不及格。规则只许收紧、不许盘中放宽。本区块是纪律工具，不是投资建议。</div>
-  </div>
-  <p style="font-size:11px;color:#b3b7bc;margin:10px 0 0">虚线金框为你手填的字段；看板每日更新时原样保留已填值，绝不代填。</p>
+<nav style="display:flex;gap:6px;overflow-x:auto;padding:12px 20px;border-bottom:1px solid #f0efec;position:sticky;top:0;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);z-index:60"><a class="tab on" href="index.html">今日</a><a class="tab" href="market.html">市场</a><a class="tab" href="journal.html">日志</a><a class="tab" href="deep-dive.html">深挖</a><a class="tab" href="learn.html">学习</a><a class="tab" href="indicators.html">指标</a></nav>
+<!-- ① 个股速览：置于 nav 之后。热力图按板块分组（色阶规则见 market 模板注释）；
+     下方两个 gopage 按钮：黑底=今日深挖（每日改期数与标的），白底=去市场页。
+     当前无持仓（2026-08-20 起）：不生成持仓体检/退出规则/持仓进度条；用户建立新仓位时按任务指令恢复。 -->
+<div class="sec" id="sq">
+  <div class="sec-t"><span>① 个股速览</span><em>{{M/D}} 收盘 · 色深=幅度</em></div>
+  <div class="hgrp">{{板块名}}</div>
+  <div class="heat"><div class="h {{色阶}}"><div class="t">{{代码}}</div><div class="p">{{±X.X}}</div></div></div>
+  <p style="font-size:13.5px;color:#5b6167;margin:14px 0 0">{{当日 >±3% 的标的一句话点评}}</p>
+  <a class="gopage" style="background:#0f1216;color:#fff" href="deep-dive.html">今日深挖 · {{第 N 期 标的}} <span style="color:#7c8288">→</span></a>
+  <a class="gopage" href="market.html">完整收盘表 · 指数 · 日历 <span>→</span></a>
 </div>
 <!-- 三开关条：写法沿用任务指令已验证的 sec-t + lamps 三格 -->
 <div class="sec" id="s1">

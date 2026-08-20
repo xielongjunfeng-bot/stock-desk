@@ -198,7 +198,7 @@ nav .tab.on{background:#0f1216;color:#fff;border-color:#0f1216}
   <div class="date">最后更新 {{MM月DD日 HH:MM}} JST ｜ 数据截至 {{M/D}} 美东收盘 ｜ 下次 {{HH:MM}} {{档位}}</div>
 </header>
 <!-- 页签导航：六页固定，当前页加 class="tab on"。顺序与文件名不许改 -->
-<nav><div class="wrap" style="display:flex;gap:6px;overflow-x:auto"><a class="tab" href="index.html">今日</a><a class="tab on" href="market.html">市场</a><a class="tab" href="journal.html">日志</a><a class="tab" href="deep-dive.html">深挖</a><a class="tab" href="learn.html">学习</a><a class="tab" href="indicators.html">指标</a></div></nav>
+<nav style="display:flex;gap:6px;overflow-x:auto;padding:12px 20px;border-bottom:1px solid #f0efec;position:sticky;top:0;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);z-index:60"><a class="tab" href="index.html">今日</a><a class="tab on" href="market.html">市场</a><a class="tab" href="journal.html">日志</a><a class="tab" href="deep-dive.html">深挖</a><a class="tab" href="learn.html">学习</a><a class="tab" href="indicators.html">指标</a></nav>
 <div class="sec" id="s3">
   <div class="sec-t"><span>③ 今后的日历</span><em>到期前 34 个交易日</em></div>
   <!-- 时间轴：cx 按日期在窗口内的位置线性分布（14=起点, 376=终点）
@@ -243,13 +243,7 @@ nav .tab.on{background:#0f1216;color:#fff;border-color:#0f1216}
   </div>
   <p style="font-size:12px;color:#b3b7bc;margin:0 0 4px">{{本节未取到项，没有就删掉这一行}}</p>
 
-  <!-- 热力图：色阶按涨跌幅绝对值选
-       ≥5% g5 / 2–5% g3 / 0.5–2% g1 / ±0.5% n0 / −0.5~−2% r1 / −2~−5% r3 / ≤−5% r5
-       每组一行 .hgrp + 一个 .heat 网格；持仓所在板块的 hgrp 里加 <em>← 你的仓位在这一格</em> -->
-  <div class="hgrp">{{板块名}}</div>
-  <div class="heat">
-    <div class="h {{色阶}}"><div class="t">{{代码}}</div><div class="p">{{±X.X}}</div></div>
-  </div>
+  <!-- 热力图已移至 index 今日页（个股速览）。本页只保留指数卡与折叠收盘表。 -->
 
   <details class="more" style="padding-left:0;padding-right:0">
     <summary>完整收盘表（带价格 · {{n}} 只）</summary>
