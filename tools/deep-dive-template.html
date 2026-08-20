@@ -105,6 +105,9 @@ h2 .n{font-size:11px;font-weight:700;color:#fff;background:var(--dark);border-ra
 footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;
   color:var(--ink3);line-height:1.75}
 footer b{color:var(--ink2)}
+
+nav .tab{flex:0 0 auto;font-size:12.5px;text-decoration:none;color:#4a4f5a;border:1px solid #dcd9d3;border-radius:8px;padding:5px 11px;white-space:nowrap;font-weight:600;background:#fff}
+nav .tab.on{background:#12141a;color:#fff;border-color:#12141a}
 </style>
 </head>
 
@@ -136,7 +139,7 @@ footer b{color:var(--ink2)}
 </div></div>
 
 <nav><div class="wrap">
-  <a href="./" style="background:#12141a;color:#fff;border-color:#12141a">← 首页</a>
+  <a class="tab" href="index.html">今日</a><a class="tab" href="market.html">市场</a><a class="tab" href="journal.html">日志</a><a class="tab on" href="deep-dive.html">深挖</a><a class="tab" href="learn.html">学习</a><a class="tab" href="indicators.html">指标</a>
   <a href="#conflict">{{节1}}</a><a href="#pro">{{节2}}</a><a href="#kline">{{节3}}</a>
   <a href="#position">{{节4}}</a><a href="#fund">{{节5}}</a><a href="#strat">{{节6}}</a><a href="#miss">{{节7}}</a>
 </div></nav>
