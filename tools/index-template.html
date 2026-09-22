@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 首页模板 v4 报纸版式（2026-09-22：仅换 CSS 外观，class/id/占位符与 v3 完全一致，填法不变）· 原 v3（2026-08-20 改版）：⓪持仓体检 → 三开关 → 四盏灯 → 反方常驻 → 今日精读 → 关键日期条。纯骨架无数据无密钥。 -->
+<!-- 首页模板 v4.1 报纸版式（2026-09-22 午：新增页签下「今日导读·大白话」；① 由个股热力图改为「环境四格＋板块九格」）· v4（2026-09-22：仅换 CSS 外观，class/id/占位符与 v3 完全一致，填法不变）· 原 v3（2026-08-20 改版）：⓪持仓体检 → 三开关 → 四盏灯 → 反方常驻 → 今日精读 → 关键日期条。纯骨架无数据无密钥。 -->
 <html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex"><meta name="referrer" content="no-referrer">
@@ -207,6 +207,27 @@ nav .tab.on{background:transparent;color:var(--ink);border-color:var(--accent)}
 .jrow .jt{font-family:var(--serif);font-size:15px;font-weight:700;margin:3px 0 4px;line-height:1.5}
 .jrow .jb{font-size:13px;color:var(--ink-2);line-height:1.65}
 .jrow .jr{font-size:12.5px;margin-top:6px;color:var(--ink-3)}
+/* ── ① 环境与板块（2026-09-22 v4.1 新增：取代个股热力图） ── */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid var(--rule)}
+.tile{padding:11px 13px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-width:0}
+.tiles>.tile:nth-child(2n){border-right:0}
+.tiles>.tile:nth-last-child(-n+2){border-bottom:0}
+.tile .lab{font-size:10px;letter-spacing:.2em;color:var(--ink-3)}
+.tile .val{font-family:var(--serif);font-size:24px;font-weight:700;line-height:1.2;margin-top:5px}
+.tile .fine{font-size:11px;color:var(--ink-2);margin-top:3px;line-height:1.5}
+.sectors{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:12px}
+.sx{padding:8px 4px;text-align:center;font-size:11px;line-height:1.4}
+.sx b{display:block;font-weight:500;color:var(--ink)}
+.sx span{font-family:var(--serif);font-weight:700;font-size:13px}
+.sx.u{background:var(--up-soft);color:var(--up)}.sx.d{background:var(--dn-soft);color:var(--dn)}.sx.n{background:var(--paper-2);color:var(--ink-2)}
+.envnote{font-size:13.5px;color:var(--ink-2);margin:12px 0 0;line-height:1.7}
+/* ── 今日导读（2026-09-22 v4.1 新增：首页最上方，大白话） ── */
+.digest{padding:18px 20px 20px;border-bottom:2px solid var(--ink)}
+.digest .dg-t{font-size:10.5px;letter-spacing:.3em;color:var(--accent);font-weight:700;margin-bottom:10px}
+.digest p{font-family:var(--serif);font-size:15.5px;line-height:1.85;margin:0 0 10px;color:var(--ink)}
+.digest p:last-child{margin-bottom:0}
+.digest p b.q{color:var(--accent);font-weight:700;margin-right:6px}
+.digest p b{font-weight:700}
 @media (prefers-color-scheme:dark){html{filter:invert(.93) hue-rotate(180deg)}}
 </style></head><body><div class="wrap">
 <header>
@@ -216,20 +237,50 @@ nav .tab.on{background:transparent;color:var(--ink);border-color:var(--accent)}
 </header>
 <!-- 页签导航：六页固定，当前页加 class="tab on"。顺序与文件名不许改 -->
 <nav style="display:flex;gap:6px;overflow-x:auto;padding:0 20px;border-bottom:1px solid #d9d0be;position:sticky;top:0;background:rgba(244,239,228,.97);backdrop-filter:blur(10px);z-index:60"><a class="tab on" href="index.html">今日</a><a class="tab" href="market.html">市场</a><a class="tab" href="journal.html">日志</a><a class="tab" href="deep-dive.html">深挖</a><a class="tab" href="learn.html">学习</a><a class="tab" href="indicators.html">指标</a></nav>
+<!-- 今日导读（2026-09-22 v4.1 新增，首页最上方、页签之后）：给碎片时间读的人看，★ 全部大白话 ★
+     四段固定：昨夜发生了什么 / 为什么 / 要注意什么 / 今天看什么。每段 1–3 句，全文 180–280 字。
+     写法红线：不用缩写和术语裸奔（SOX→"费城半导体指数"、bp→"个基点（0.01%）"或直接说"利率降了一点"、contango/OAS/put-call 不出现，需要时用一句人话代替）；
+     不堆数字，每段最多 2 个数字；先说结论再说原因；"影响"要落到"对科技/芯片这类股票意味着什么"；
+     不给买卖建议、不预测；三开关/四盏灯只用一句人话总结（例：「资金面和产业面的仪表都在安全区」）。 -->
+<div class="digest" id="dg">
+  <div class="dg-t">今日导读 · 大白话</div>
+  <p><b class="q">昨夜发生了什么</b>{{一两句：指数方向 + 最抢眼的一件事}}</p>
+  <p><b class="q">为什么</b>{{一两句：宏观首因 + 板块首因，用人话解释因果}}</p>
+  <p><b class="q">要注意什么</b>{{一两句：这次涨跌靠的是业绩还是情绪/外部变量；最脆弱的地方在哪}}</p>
+  <p><b class="q">今天看什么</b>{{一两句：今晚开盘后盯的 1–2 件事 + 仪表盘一句话}}</p>
+</div>
+
 <!-- 顶部横幅卡：今日深挖直达（期数与标的来自 tools/state.json）。每日更新原样保留结构，只改期数与标的。 -->
 <a href="deep-dive.html" style="display:flex;justify-content:space-between;align-items:center;margin:16px 20px 0;padding:13px 16px;background:#ebe4d5;color:#1c1a17;border:1px solid #d9d0be;border-left:4px solid #a8322b;text-decoration:none"><span><span style="font-size:10.5px;letter-spacing:2.5px;color:#a8322b;font-weight:700">今日深挖</span><br><span style="font-size:16.5px;font-weight:700">{{第 N 期 · 标的}}</span></span><span style="font-size:13px;color:#59534a;border:1px solid #d9d0be;padding:4px 10px;border-radius:2px;font-size:12px">打开 →</span></a>
 
-<!-- ① 个股速览：置于 nav 之后。热力图按板块分组（色阶规则见 market 模板注释）；
-     下方 gopage 按钮：白底=去市场页。（今日深挖入口已升级为 nav 下方的顶部横幅卡，不再放黑底按钮）
-     当前无持仓（2026-08-20 起）：不生成持仓体检/退出规则/持仓进度条；用户建立新仓位时按任务指令恢复。 -->
+<!-- ① 环境与板块（2026-09-22 v4.1：取代 25 只个股热力图；个股行情只在 market 页折叠收盘表与深挖页出现）
+     四格固定顺序：大盘（三大指数收盘）/ 期货（生成时刻的指数期货，标 JST 时刻）/ 利率（10Y 收盘与单日 bp 变动，fine 行放 30Y 与 13 周）/ 恐慌（VIX 收盘，fine 行按固定阈值分档：<15 平静 · 15–20 正常 · 20–30 紧张 · >30 恐慌）
+     板块九格固定顺序与代码：RSP 等权 / IWM 小盘 / SMH 半导体 / XLK 科技 / XLE 能源 / XLF 金融 / XLP 必需 / XLU 公用 / XLV 医疗，来源 stockanalysis.com/etf/{代码}/ 收盘；
+     色 class：|幅|<0.3% → n；涨 ≥0.3% → u；跌 ≤−0.3% → d。涨绿跌红由 CSS 决定，不要手写颜色。
+     envnote 一行：几涨几跌 + 领涨/领跌 + RSP−SPY 差值一句（>+0.3% 广度强于指数 · ±0.3% 内同步 · <−0.3% 少数大票主导）。当日 >±5% 的自选股最多点 1–2 只，其余不写。 -->
 <div class="sec" id="sq">
-  <div class="sec-t"><span>① 个股速览</span><em>{{M/D}} 收盘 · 色深=幅度</em></div>
-  <div class="hgrp">{{板块名}}</div>
-  <div class="heat"><div class="h {{色阶}}"><div class="t">{{代码}}</div><div class="p">{{±X.X}}</div></div></div>
-  <p style="font-size:13.5px;color:#59534a;margin:14px 0 0">{{当日 >±3% 的标的一句话点评}}</p>
+  <div class="sec-t"><span>① 环境与板块</span><em>{{M/D}} 收盘 · 期货 {{HH:MM}} JST</em></div>
+  <div class="tiles">
+    <div class="tile"><div class="lab">大盘 · 收盘</div><div class="val num {{up|dn}}">{{标普涨跌%}}</div><div class="fine">标普 {{点位}} · 纳指 <span class="{{up|dn}}">{{±%}}</span> · 道指 <span class="{{up|dn}}">{{±%}}</span></div></div>
+    <div class="tile"><div class="lab">期货 · 盘前</div><div class="val num {{up|dn}}">{{标普期货±%}}</div><div class="fine">纳指期货 <span class="{{up|dn}}">{{±%}}</span> · 道指期货 <span class="{{up|dn}}">{{±%}}</span></div></div>
+    <div class="tile"><div class="lab">利率 · 10Y</div><div class="val num">{{x.xx}}%</div><div class="fine"><span class="{{up|dn}}">{{±bp}}</span> {{平稳|明显|剧烈}} · 30Y {{x.xx}}% · 13周 {{x.xx}}%</div></div>
+    <div class="tile"><div class="lab">恐慌 · VIX</div><div class="val num">{{xx.xx}}</div><div class="fine">{{平静|正常|紧张|恐慌}}区 · {{±x.xx}} · 期限结构 {{contango|backwardation}}</div></div>
+  </div>
+  <div class="sectors">
+    <div class="sx {{u|d|n}}"><b>等权 RSP</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>小盘 IWM</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>半导体 SMH</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>科技 XLK</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>能源 XLE</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>金融 XLF</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>必需 XLP</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>公用 XLU</b><span>{{±x.xx%}}</span></div>
+    <div class="sx {{u|d|n}}"><b>医疗 XLV</b><span>{{±x.xx%}}</span></div>
+  </div>
+  <p class="envnote">{{几涨几跌 · 领涨/领跌 · RSP−SPY 广度一句 · 当日 >±5% 自选股最多 1–2 只}}</p>
   <a class="gopage" href="market.html">完整收盘表 · 指数 · 日历 <span>→</span></a>
 </div>
-<!-- 三开关条：写法沿用任务指令已验证的 sec-t + lamps 三格 -->
+
 <div class="sec" id="s1">
   <div class="sec-t" style="margin-top:0"><span>② 三开关 · 流动性纪律</span><em>一票否决 · 优先四盏灯</em></div>
   {{三开关三格，复用 .lamp 写法}}
